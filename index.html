@@ -134,7 +134,7 @@
 <div class="actions">
 <a class="btn" href="#kategorije">Kategorije</a>
 <a class="btn" href="#cenovnik">Cenovnik</a>
-<button class="btn btn-primary" id="orderTop">Poruči</button>
+<a class="btn btn-primary" href="order.html">Poruči</a>
 </div>
 </div>
 </header>
@@ -235,7 +235,7 @@
 <li>1 runda sitnih izmena</li>
 <li>Isporuka do 72h</li>
 </ul>
-<button class="btn" onclick="openOrder()">Poruči START</button>
+<a class="btn" href="order.html">Poruči START</a>
 </div>
 <div class="price-card highlight">
 <div class="muted">PRO (Najpopularniji)</div>
@@ -246,7 +246,7 @@
 <li>2 runde sitnih izmena</li>
 <li>Isporuka do 48h</li>
 </ul>
-<button class="btn btn-primary" onclick="openOrder()">Poruči PRO</button>
+<a class="btn btn-primary" href="order.html">Poruči PRO</a>
 </div>
 <div class="price-card">
 <div class="muted">VIP</div>
@@ -257,7 +257,7 @@
 <li>Ekspres (24h)</li>
 <li>Prioritetna podrška</li>
 </ul>
-<button class="btn" onclick="openOrder()">Poruči VIP</button>
+<a class="btn" href="order.html">Poruči VIP</a>
 </div>
 </div>
 </section>
@@ -286,7 +286,7 @@
 <h2 class="section-title" style="margin:0">Spremni? Naručite u 3 laka koraka</h2>
 <div class="muted">Klikni “Poruči”, plati na Payoneer ili račun — mi te kontaktiramo istog dana.</div>
 </div>
-<button class="btn btn-primary" onclick="openOrder()">Poruči sada</button>
+<a class="btn btn-primary" href="order.html">Poruči sada</a>
 </div>
 </div>
 </section>
@@ -308,52 +308,6 @@
 <div class="modal-body">
 <div class="ytbox">
 <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="100%" id="ytFrame" src="" title="YouTube video player" width="100%"></iframe>
-</div>
-</div>
-</div>
-</div>
-<!-- Modal: Order & Payment -->
-<div class="modal-overlay" id="orderModal">
-<div class="modal">
-<header class="container" style="padding:14px 16px 0">
-<button class="close" onclick="closeOrder()">Zatvori ✕</button>
-</header>
-<div class="modal-body">
-<div class="container">
-<h3 class="section-title" style="margin-top:0">Uplata &amp; instrukcije</h3>
-<div class="order-grid">
-<div class="panel">
-<strong>1) Payoneer (preporučeno — najbrže)</strong>
-<p>Pošaljite iznos odabrane paketa na naš Payoneer nalog:</p>
-<ul class="list">
-<li>Account email: <span class="kbd">pay@vasdomen.com</span></li>
-<li>Account name: <span class="kbd">Vas Brend d.o.o.</span></li>
-<li>Opis/Reference: <span class="kbd">"Cestitka — Ime slavljenika"</span></li>
-</ul>
-<p class="note">*Po uplati, obavezno sačuvajte potvrdu (screenshot ili PDF).</p>
-</div>
-<div class="panel">
-<strong>2) Bankovni račun (SEPA/SRB)</strong>
-<ul class="list">
-<li>Primalac: <span class="kbd">Vas Brend d.o.o.</span></li>
-<li>IBAN: <span class="kbd">RS00 0000 0000 0000 0000 00</span></li>
-<li>SWIFT/BIC: <span class="kbd">XXXXRSBG</span></li>
-<li>Svrha uplate: <span class="kbd">"Cestitka — Ime slavljenika"</span></li>
-</ul>
-<p class="note">*Međunarodne provizije snosi nalogodavac.</p>
-</div>
-</div>
-<div class="panel" style="margin-top:16px">
-<strong>3) Pošaljite nam detalje</strong>
-<p>Posle uplate, pošaljite email na <a href="mailto:orders@vasdomen.com">orders@vasdomen.com</a> sa sledećim:</p>
-<ol class="list">
-<li>Potvrda uplate (screenshot ili PDF).</li>
-<li>Kratak opis slavljenika (ime, nadimci, zanimljivosti, interni fore).</li>
-<li>Ton videa (prank, toplo, romantično…), jezik, i željena dužina.</li>
-<li>Deadline (ako postoji) i format isporuke (MP4, link, itd.).</li>
-</ol>
-<p class="note">Kontaktiraćemo vas u roku od 12h od prijema poruke (radnim danima).</p>
-</div>
 </div>
 </div>
 </div>
@@ -424,28 +378,23 @@
       });
     });
     function closeVideo(){
+      if(!videoModal) return;
       ytFrame.src = '';
       videoModal.style.display = 'none';
     }
 
-    // Order modal
-    const orderModal = document.getElementById('orderModal');
-    function openOrder(){ orderModal.style.display='flex'; }
-    function closeOrder(){ orderModal.style.display='none'; }
-    document.getElementById('orderTop').addEventListener('click', openOrder);
-
     // Escape to close modals
     window.addEventListener('keydown', (e)=>{
       if(e.key === 'Escape'){
-        closeVideo(); closeOrder();
+        closeVideo();
       }
     });
     // Click outside
-    [videoModal, orderModal].forEach(modal => {
-      modal.addEventListener('click', (e)=>{
-        if(e.target === modal){ modal.style.display = 'none'; ytFrame.src=''; }
+    if(videoModal){
+      videoModal.addEventListener('click', (e)=>{
+        if(e.target === videoModal){ videoModal.style.display = 'none'; ytFrame.src=''; }
       });
-    });
+    }
   </script>
 </body>
 </html>
