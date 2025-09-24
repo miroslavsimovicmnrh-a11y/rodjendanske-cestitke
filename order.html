@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Instrukcije za uplatu</title>
+  <style>
+    :root {
+      --purple: #7c5cff;
+      --orange: #ff7a45;
+      --bg: #0b0b10;
+      --text-dark: #1b1d29;
+      --muted: #5a6072;
+      --radius: 20px;
+      --shadow: 0 28px 60px rgba(10, 8, 38, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(124, 92, 255, 0.18), transparent 60%),
+        radial-gradient(1000px 600px at 90% -20%, rgba(255, 122, 69, 0.16), transparent 60%),
+        var(--bg);
+      color: var(--text-dark);
+      padding: 32px 16px;
+    }
+
+    .card {
+      width: min(520px, 100%);
+      background: #ffffff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(28px, 5vw, 42px);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 5vw, 34px);
+      color: var(--text-dark);
+      line-height: 1.2;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .form-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .select-control {
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(10, 11, 28, 0.12);
+      background: #f9f9fc;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-dark);
+      appearance: none;
+      background-image: linear-gradient(45deg, transparent 50%, var(--purple) 50%),
+        linear-gradient(135deg, var(--purple) 50%, transparent 50%),
+        linear-gradient(to right, rgba(10, 11, 28, 0.12), rgba(10, 11, 28, 0.12));
+      background-position: calc(100% - 24px) calc(50% - 6px),
+        calc(100% - 18px) calc(50% - 6px),
+        calc(100% - 42px) 50%;
+      background-size: 10px 10px, 10px 10px, 1px 24px;
+      background-repeat: no-repeat;
+      cursor: pointer;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .select-control:focus {
+      outline: none;
+      border-color: rgba(124, 92, 255, 0.6);
+      box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.18);
+    }
+
+    .price-display {
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(124, 92, 255, 0.08);
+      color: var(--text-dark);
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .account-box {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .account-input {
+      flex: 1 1 240px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(10, 11, 28, 0.12);
+      background: #f9f9fc;
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      color: var(--text-dark);
+    }
+
+    .account-input:focus {
+      outline: none;
+      border-color: rgba(124, 92, 255, 0.6);
+      box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.18);
+    }
+
+    .copy-btn {
+      flex: 0 0 auto;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--purple), var(--orange));
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 16px 30px rgba(124, 92, 255, 0.26);
+    }
+
+    .copy-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 36px rgba(124, 92, 255, 0.32);
+    }
+
+    .copy-btn:active {
+      transform: translateY(0);
+    }
+
+    .hint {
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    .notice {
+      display: none;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--purple);
+    }
+
+    .notice.show {
+      display: block;
+      animation: fade-in 0.3s ease;
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .back-link {
+      margin-top: 12px;
+      text-decoration: none;
+      color: var(--purple);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .back-link:hover {
+      color: var(--orange);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Instrukcije za uplatu</h1>
+    <p>Da biste naručili svoju video čestitku, uplatite iznos na sledeći račun:</p>
+
+    <div class="form-section">
+      <select class="select-control" id="packageSelect" aria-label="Odaberite paket">
+        <option value="2500">Basic – 2.500 RSD</option>
+        <option value="4500">Standard – 4.500 RSD</option>
+        <option value="6500">Premium – 6.500 RSD</option>
+      </select>
+
+      <div class="price-display" id="priceDisplay">Iznos za uplatu: 2.500 RSD</div>
+
+      <div class="account-box">
+        <input
+          class="account-input"
+          id="accountNumber"
+          type="text"
+          value="160-123456789-12, Raiffeisen banka"
+          readonly
+        />
+        <button class="copy-btn" id="copyBtn" type="button">Kopiraj broj računa</button>
+      </div>
+      <div class="notice" id="copyNotice">Broj računa je kopiran!</div>
+    </div>
+
+    <div class="hint">U polje svrha uplate unesite ime slavljenika.</div>
+    <div class="hint">Nakon uplate, pošaljite potvrdu na: <a href="mailto:info@playgen.com">info@playgen.com</a></div>
+
+    <a class="back-link" href="index.html">⬅ Povratak na početnu stranicu</a>
+  </div>
+
+  <script>
+    const copyButton = document.getElementById('copyBtn');
+    const accountInput = document.getElementById('accountNumber');
+    const notice = document.getElementById('copyNotice');
+    const packageSelect = document.getElementById('packageSelect');
+    const priceDisplay = document.getElementById('priceDisplay');
+
+    const packagePrices = {
+      2500: '2.500',
+      4500: '4.500',
+      6500: '6.500',
+    };
+
+    function updatePriceDisplay() {
+      const value = packageSelect.value;
+      priceDisplay.textContent = `Iznos za uplatu: ${packagePrices[value]} RSD`;
+    }
+
+    function showNotice() {
+      notice.classList.add('show');
+      clearTimeout(showNotice.timeout);
+      showNotice.timeout = setTimeout(() => {
+        notice.classList.remove('show');
+      }, 2400);
+    }
+
+    async function copyToClipboard() {
+      const text = accountInput.value;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        try {
+          await navigator.clipboard.writeText(text);
+          showNotice();
+          return;
+        } catch (error) {
+          // fallback below
+        }
+      }
+
+      accountInput.select();
+      accountInput.setSelectionRange(0, text.length);
+      const successful = document.execCommand('copy');
+      if (successful) {
+        showNotice();
+      }
+      window.getSelection().removeAllRanges();
+    }
+
+    packageSelect.addEventListener('change', updatePriceDisplay);
+    copyButton.addEventListener('click', copyToClipboard);
+    updatePriceDisplay();
+  </script>
+</body>
+</html>
