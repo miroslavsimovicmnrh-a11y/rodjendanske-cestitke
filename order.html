@@ -67,6 +67,49 @@
       margin-top: 8px;
     }
 
+    .form-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    label {
+      font-weight: 600;
+      color: var(--text-dark);
+      font-size: 15px;
+    }
+
+    .package-select {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(10, 11, 28, 0.12);
+      background: #f9f9fc;
+      font-size: 16px;
+      color: var(--text-dark);
+      appearance: none;
+      background-image: linear-gradient(135deg, rgba(124, 92, 255, 0.18), rgba(255, 122, 69, 0.12));
+      background-origin: border-box;
+    }
+
+    .package-select:focus {
+      outline: none;
+      border-color: rgba(124, 92, 255, 0.6);
+      box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.18);
+    }
+
+    .amount-display {
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(124, 92, 255, 0.08);
+      font-weight: 700;
+      color: var(--text-dark);
+      font-size: 17px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
     .account-input {
       flex: 1 1 240px;
       padding: 14px 16px;
@@ -156,6 +199,18 @@
     <h1>Instrukcije za uplatu</h1>
     <p>Da biste naručili svoju video čestitku, uplatite iznos na sledeći račun:</p>
 
+    <div class="form-section">
+      <label for="packageSelect">Odaberite paket</label>
+      <select class="package-select" id="packageSelect">
+        <option value="2500" selected>Basic – 2.500 RSD</option>
+        <option value="4500">Standard – 4.500 RSD</option>
+        <option value="6500">Premium – 6.500 RSD</option>
+      </select>
+      <div class="amount-display" id="paymentAmount">
+        Iznos za uplatu: <span>2.500 RSD</span>
+      </div>
+    </div>
+
     <div>
       <div class="account-box">
         <input
@@ -180,6 +235,8 @@
     const copyButton = document.getElementById('copyBtn');
     const accountInput = document.getElementById('accountNumber');
     const notice = document.getElementById('copyNotice');
+    const packageSelect = document.getElementById('packageSelect');
+    const paymentAmount = document.getElementById('paymentAmount');
 
     function showNotice() {
       notice.classList.add('show');
@@ -187,6 +244,16 @@
       showNotice.timeout = setTimeout(() => {
         notice.classList.remove('show');
       }, 2400);
+    }
+
+    function formatAmount(value) {
+      return Number(value).toLocaleString('sr-RS');
+    }
+
+    function updateAmount() {
+      const value = packageSelect.value;
+      const formatted = `${formatAmount(value)} RSD`;
+      paymentAmount.querySelector('span').textContent = formatted;
     }
 
     async function copyToClipboard() {
@@ -211,6 +278,8 @@
     }
 
     copyButton.addEventListener('click', copyToClipboard);
+    packageSelect.addEventListener('change', updateAmount);
+    updateAmount();
   </script>
 </body>
 </html>
