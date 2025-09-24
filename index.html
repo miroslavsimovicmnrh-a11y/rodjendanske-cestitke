@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ROĐENDANSKE PRANK VIDEO ČESTITKE — AI Custom</title>
+  <meta name="description" content="AI generisane, personalizovane prank rođendanske video čestitke. Brzo, moderno i nezaboravno." />
+  <style>
+    :root{
+      --bg:#0b0b10;
+      --bg2:#10121a;
+      --card:#141827cc;
+      --text:#eef1f7;
+      --muted:#b7bfd4;
+      --accent:#7c5cff;
+      --accent2:#00e0ff;
+      --success:#00d39a;
+      --warning:#ffd166;
+      --danger:#ff6b6b;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(124,92,255,.18), transparent 60%),
+        radial-gradient(1000px 600px at 90% -20%, rgba(0,224,255,.15), transparent 60%),
+        radial-gradient(1200px 800px at 50% 120%, rgba(124,92,255,.12), transparent 60%),
+        var(--bg);
+      line-height:1.6;
+    }
+    a{color:var(--accent2);text-decoration:none}
+    .container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px}
+    /* Header */
+    header{
+      position:sticky;top:0;z-index:50;
+      backdrop-filter:saturate(120%) blur(8px);
+      background-color: rgba(10,12,18,.6);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.4px}
+    .logo{
+      width:40px;height:40px;border-radius:12px;
+      background: conic-gradient(from 180deg, var(--accent), var(--accent2), var(--accent));
+      box-shadow: 0 8px 24px rgba(124,92,255,.45), inset 0 0 18px rgba(255,255,255,.2);
+    }
+    .actions{display:flex;gap:10px;align-items:center}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:12px 18px;border-radius:14px;border:1px solid rgba(255,255,255,.09);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      color:var(--text);font-weight:700;cursor:pointer;transition:.2s transform, .2s box-shadow, .2s background;
+      box-shadow: var(--shadow);
+    }
+    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.10)}
+    .btn-primary{background: linear-gradient(180deg, var(--accent), #5a39ff);border:0;box-shadow: 0 10px 20px rgba(124,92,255,.45)}
+    .btn-primary:hover{filter:brightness(1.06)}
+    /* Hero */
+    .hero{padding:72px 0 32px}
+    .headline{font-size: clamp(28px, 5vw, 56px);line-height:1.1;margin:8px 0 16px;font-weight:900}
+    .sub{color:var(--muted);max-width:780px}
+    .hero-card{
+      margin-top:28px;display:grid;grid-template-columns:1.2fr .8fr;gap:18px;
+    }
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08); border-radius: var(--radius); padding:18px;
+      box-shadow: var(--shadow);
+    }
+    .stat-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
+    .chip{padding:8px 12px;border-radius:999px;background:rgba(124,92,255,.18);border:1px solid rgba(124,92,255,.4);font-weight:700}
+    .badge{
+      display:inline-block;background:linear-gradient(90deg, var(--success), var(--accent2));color:#002b2b;
+      font-weight:900;padding:8px 12px;border-radius:999px;margin-bottom:10px
+    }
+    /* Kategorije */
+    .grid{display:grid;gap:18px}
+    .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+    @media (max-width:980px){.hero-card{grid-template-columns:1fr}.grid.cols-3{grid-template-columns:1fr 1fr}}
+    @media (max-width:620px){.grid.cols-3{grid-template-columns:1fr}}
+    .card{
+      position:relative;overflow:hidden;border-radius:var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);
+      cursor:pointer;min-height:220px;display:flex;align-items:flex-end;padding:16px;box-shadow:var(--shadow)
+    }
+    .card .title{font-size:20px;font-weight:900;text-shadow:0 8px 30px rgba(0,0,0,.6)}
+    .card .tag{position:absolute;top:14px;left:14px;background:rgba(0,0,0,.5);padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.2)}
+    .card::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,.0), rgba(0,0,0,.65));z-index:0}
+    .card>div{position:relative;z-index:1}
+    .card img, .card video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(1.1) contrast(1.05) brightness(.9)}
+    .card:hover{transform:translateY(-3px)}
+    /* Sekcije */
+    section{padding:42px 0}
+    .section-title{font-size:28px;font-weight:900;margin-bottom:12px}
+    .muted{color:var(--muted)}
+    /* Cenovnik */
+    .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    @media (max-width:980px){.pricing{grid-template-columns:1fr}}
+    .price-card{padding:22px;border-radius:var(--radius);border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02))}
+    .price{font-size:36px;font-weight:900;margin:10px 0}
+    .list{margin:0;padding:0 0 0 18px}
+    .list li{margin:8px 0}
+    .highlight{background:linear-gradient(180deg, rgba(124,92,255,.35), rgba(124,92,255,.05));border:1px solid rgba(124,92,255,.5)}
+    /* Socials */
+    .socials{display:flex;gap:12px;flex-wrap:wrap}
+    .icon-btn{width:44px;height:44px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);box-shadow:var(--shadow)}
+    /* Footer */
+    footer{padding:26px 0;color:var(--muted);border-top:1px solid rgba(255,255,255,.08)}
+    /* Modal */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter: blur(6px);display:none;align-items:center;justify-content:center;padding:20px;z-index:1000}
+    .modal{background:var(--bg2);border:1px solid rgba(255,255,255,.12);border-radius:20px;max-width:880px;width:100%;box-shadow:var(--shadow)}
+    .modal header{position:relative;background:transparent;border:0}
+    .modal-body{padding:18px}
+    .close{position:absolute;right:14px;top:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:8px 12px;cursor:pointer}
+    .ytbox{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:#000}
+    .order-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media (max-width:800px){.order-grid{grid-template-columns:1fr}}
+    .kbd{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;background:rgba(255,255,255,.06);padding:3px 6px;border-radius:6px;border:1px solid rgba(255,255,255,.12)}
+    .note{font-size:14px;color:var(--muted)}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(0,224,255,.18);border:1px solid rgba(0,224,255,.4);font-weight:700;margin-right:6px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div style="font-size:14px;color:var(--muted);font-weight:700;letter-spacing:.08em">AI PRANK</div>
+          <div style="font-size:18px;font-weight:900;">VIDEO ČESTITKE</div>
+        </div>
+      </div>
+      <div class="actions">
+        <a href="#kategorije" class="btn">Kategorije</a>
+        <a href="#cenovnik" class="btn">Cenovnik</a>
+        <button class="btn btn-primary" id="orderTop">Poruči</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <span class="badge">Personalizovano • AI • 100% smeh</span>
+      <h1 class="headline">Custom AI prank rođendanske <span style="background:linear-gradient(90deg,var(--accent2),var(--accent));-webkit-background-clip:text;color:transparent">video čestitke</span> koje se prepričavaju.</h1>
+      <p class="sub">Ti nam pošalješ nekoliko informacija o slavljeniku — mi kreiramo urnebesnu, potpuno personalizovanu video čestitku. Brzo, moćno i nezaboravno.</p>
+      <div class="hero-card">
+        <div class="panel">
+          <strong>Za koga su naše čestitke?</strong>
+          <div class="stat-row">
+            <span class="chip">Za ekipu (prank)</span>
+            <span class="chip">Za decu</span>
+            <span class="chip">Ljubavne</span>
+            <span class="chip">VIP / Biznis</span>
+          </div>
+          <p class="muted" style="margin-top:10px">Sve se radi diskretno i po meri. Ti biraš ton (satirično, toplo, romantično, totalni prank) – mi isporučujemo.</p>
+        </div>
+        <div class="panel">
+          <div class="section-title" style="margin:0 0 6px">Broj srećnih klijenata</div>
+          <div style="font-size:54px;font-weight:900" id="counter">1,284</div>
+          <div class="note">*Brojač raste dok čitaš. Hvala na poverenju!</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="kategorije">
+      <h2 class="section-title">Kategorije</h2>
+      <p class="muted" style="margin-top:-6px">Klikni na kategoriju i pogledaj primer(e) na YouTube-u.</p>
+      <div class="grid cols-3">
+        <div class="card" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ" style="background:#000">
+          <span class="tag">Prank</span>
+          <img src="https://images.unsplash.com/photo-1541534401786-2077eed87a72?q=80&w=1200&auto=format&fit=crop" alt="Prank čestitke">
+          <div class="title">Totalni prank</div>
+        </div>
+        <div class="card" data-video="https://www.youtube.com/embed/oHg5SJYRHA0">
+          <span class="tag">Deca</span>
+          <img src="https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?q=80&w=1200&auto=format&fit=crop" alt="Čestitke za decu">
+          <div class="title">Za decu</div>
+        </div>
+        <div class="card" data-video="https://www.youtube.com/embed/tAGnKpE4NCI">
+          <span class="tag">Ljubav</span>
+          <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1200&auto=format&fit=crop" alt="Ljubavne čestitke">
+          <div class="title">Ljubavne</div>
+        </div>
+        <div class="card" data-video="https://www.youtube.com/embed/2vjPBrBU-TM">
+          <span class="tag">Biznis</span>
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop" alt="Biznis / VIP">
+          <div class="title">VIP / Biznis</div>
+        </div>
+        <div class="card" data-video="https://www.youtube.com/embed/9bZkp7q19f0">
+          <span class="tag">Rođaci</span>
+          <img src="https://images.unsplash.com/photo-1520975922322-261c3b95a87b?q=80&w=1200&auto=format&fit=crop" alt="Porodične čestitke">
+          <div class="title">Porodično</div>
+        </div>
+        <div class="card" data-video="https://www.youtube.com/embed/3JZ_D3ELwOQ">
+          <span class="tag">Specijal</span>
+          <img src="https://images.unsplash.com/photo-1542353436-312f0ce1c8b9?q=80&w=1200&auto=format&fit=crop" alt="Specijalne čestitke">
+          <div class="title">Specijal</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="grid" style="grid-template-columns:1.2fr .8fr;gap:18px">
+        <div class="panel">
+          <h2 class="section-title">Šta dobijate</h2>
+          <ul class="list">
+            <li>Personalizovan AI scenario (satira, romantika ili prank – kako želite).</li>
+            <li>Glas i vizuelni stil po meri (srpski, engleski…)</li>
+            <li>Video 30–90 sekundi u Full HD formatu, spreman za slanje.</li>
+            <li>Brza isporuka (obično 24–72h).</li>
+            <li>2 kruga sitnih izmena uključena u cenu.</li>
+          </ul>
+          <div style="margin-top:10px">
+            <span class="pill">100% digitalno</span>
+            <span class="pill">Diskretno</span>
+            <span class="pill">Bezbedno plaćanje</span>
+          </div>
+        </div>
+        <div class="panel">
+          <h2 class="section-title">Pravila korišćenja</h2>
+          <ul class="list">
+            <li>Sadržaj je namenjen privatnoj upotrebi (deljenje u krugu prijatelja/porodice).</li>
+            <li>Javni/commercial prikaz moguć uz dodatnu licencu.</li>
+            <li>Zabranjen govor mržnje, uvrede i nezakonite teme.</li>
+            <li>Čuvamo diskreciju i privatnost podataka.</li>
+          </ul>
+          <p class="note">*Zadržavamo pravo da odbijemo zahtev koji krši pravila.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="cenovnik">
+      <h2 class="section-title">Cenovnik</h2>
+      <div class="pricing">
+        <div class="price-card">
+          <div class="muted">START</div>
+          <div class="price">€39</div>
+          <ul class="list">
+            <li>Video do 45s</li>
+            <li>1 stil glasa</li>
+            <li>1 runda sitnih izmena</li>
+            <li>Isporuka do 72h</li>
+          </ul>
+          <button class="btn" onclick="openOrder()">Poruči START</button>
+        </div>
+        <div class="price-card highlight">
+          <div class="muted">PRO (Najpopularniji)</div>
+          <div class="price">€69</div>
+          <ul class="list">
+            <li>Video do 75s</li>
+            <li>Više stilova/glasa</li>
+            <li>2 runde sitnih izmena</li>
+            <li>Isporuka do 48h</li>
+          </ul>
+          <button class="btn btn-primary" onclick="openOrder()">Poruči PRO</button>
+        </div>
+        <div class="price-card">
+          <div class="muted">VIP</div>
+          <div class="price">€129</div>
+          <ul class="list">
+            <li>Video do 90s</li>
+            <li>Custom vizuelni stil</li>
+            <li>Ekspres (24h)</li>
+            <li>Prioritetna podrška</li>
+          </ul>
+          <button class="btn" onclick="openOrder()">Poruči VIP</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Zapratite nas</h2>
+      <div class="socials">
+        <a class="icon-btn" href="#" aria-label="Instagram" title="Instagram">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z" stroke="currentColor" opacity=".7"/><path d="M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10z" stroke="currentColor"/><circle cx="18" cy="6" r="1.2" fill="currentColor"/></svg>
+        </a>
+        <a class="icon-btn" href="#" aria-label="YouTube" title="YouTube">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M22 12s0-4-1-5-5-1-9-1-8 0-9 1-1 5-1 5 0 4 1 5 5 1 9 1 8 0 9-1 1-5 1-5z" stroke="currentColor" opacity=".7"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg>
+        </a>
+        <a class="icon-btn" href="#" aria-label="TikTok" title="TikTok">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M15 3v3a5 5 0 0 0 5 5h1" stroke="currentColor"/><path d="M15 10.5v3.5a5 5 0 1 1-5-5c.7 0 1.4.1 2 .3" stroke="currentColor" opacity=".7"/></svg>
+        </a>
+        <a class="icon-btn" href="#" aria-label="Facebook" title="Facebook">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M14 8h3V5h-3a4 4 0 0 0-4 4v3H7v3h3v6h3v-6h3l1-3h-4V9a1 1 0 0 1 1-1z" stroke="currentColor"/></svg>
+        </a>
+      </div>
+      <p class="note">*Zameni # linkove svojim nalozima.</p>
+    </section>
+
+    <section>
+      <div class="panel">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+          <div>
+            <h2 class="section-title" style="margin:0">Spremni? Naručite u 3 laka koraka</h2>
+            <div class="muted">Klikni “Poruči”, plati na Payoneer ili račun — mi te kontaktiramo istog dana.</div>
+          </div>
+          <button class="btn btn-primary" onclick="openOrder()">Poruči sada</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+        <div>© <span id="year"></span> AI PRANK VIDEO ČESTITKE</div>
+        <div class="note">Kontakt: <a href="mailto:hello@vasdomen.com">hello@vasdomen.com</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal: Video Preview -->
+  <div class="modal-overlay" id="videoModal">
+    <div class="modal">
+      <header class="container" style="padding:14px 16px 0">
+        <button class="close" onclick="closeVideo()">Zatvori ✕</button>
+      </header>
+      <div class="modal-body">
+        <div class="ytbox">
+          <iframe id="ytFrame" width="100%" height="100%" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Order & Payment -->
+  <div class="modal-overlay" id="orderModal">
+    <div class="modal">
+      <header class="container" style="padding:14px 16px 0">
+        <button class="close" onclick="closeOrder()">Zatvori ✕</button>
+      </header>
+      <div class="modal-body">
+        <div class="container">
+          <h3 class="section-title" style="margin-top:0">Uplata & instrukcije</h3>
+          <div class="order-grid">
+            <div class="panel">
+              <strong>1) Payoneer (preporučeno — najbrže)</strong>
+              <p>Pošaljite iznos odabrane paketa na naš Payoneer nalog:</p>
+              <ul class="list">
+                <li>Account email: <span class="kbd">pay@vasdomen.com</span></li>
+                <li>Account name: <span class="kbd">Vas Brend d.o.o.</span></li>
+                <li>Opis/Reference: <span class="kbd">"Cestitka — Ime slavljenika"</span></li>
+              </ul>
+              <p class="note">*Po uplati, obavezno sačuvajte potvrdu (screenshot ili PDF).</p>
+            </div>
+            <div class="panel">
+              <strong>2) Bankovni račun (SEPA/SRB)</strong>
+              <ul class="list">
+                <li>Primalac: <span class="kbd">Vas Brend d.o.o.</span></li>
+                <li>IBAN: <span class="kbd">RS00 0000 0000 0000 0000 00</span></li>
+                <li>SWIFT/BIC: <span class="kbd">XXXXRSBG</span></li>
+                <li>Svrha uplate: <span class="kbd">"Cestitka — Ime slavljenika"</span></li>
+              </ul>
+              <p class="note">*Međunarodne provizije snosi nalogodavac.</p>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-top:16px">
+            <strong>3) Pošaljite nam detalje</strong>
+            <p>Posle uplate, pošaljite email na <a href="mailto:orders@vasdomen.com">orders@vasdomen.com</a> sa sledećim:</p>
+            <ol class="list">
+              <li>Potvrda uplate (screenshot ili PDF).</li>
+              <li>Kratak opis slavljenika (ime, nadimci, zanimljivosti, interni fore).</li>
+              <li>Ton videa (prank, toplo, romantično…), jezik, i željena dužina.</li>
+              <li>Deadline (ako postoji) i format isporuke (MP4, link, itd.).</li>
+            </ol>
+            <p class="note">Kontaktiraćemo vas u roku od 12h od prijema poruke (radnim danima).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Footer year & counter animation
+    document.getElementById('year').textContent = new Date().getFullYear();
+    (function(){
+      const el = document.getElementById('counter');
+      let n = 1284, target = n + Math.floor(Math.random()*40+10);
+      const tick = () => { n += Math.random() * 3; el.textContent = Math.floor(n).toLocaleString('sr-RS'); if(n < target) requestAnimationFrame(tick); };
+      tick();
+    })();
+
+    // Video modal
+    const videoModal = document.getElementById('videoModal');
+    const ytFrame = document.getElementById('ytFrame');
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => {
+        const src = card.getAttribute('data-video');
+        ytFrame.src = src + '?autoplay=1&rel=0';
+        videoModal.style.display = 'flex';
+      });
+    });
+    function closeVideo(){
+      ytFrame.src = '';
+      videoModal.style.display = 'none';
+    }
+
+    // Order modal
+    const orderModal = document.getElementById('orderModal');
+    function openOrder(){ orderModal.style.display='flex'; }
+    function closeOrder(){ orderModal.style.display='none'; }
+    document.getElementById('orderTop').addEventListener('click', openOrder);
+
+    // Escape to close modals
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape'){
+        closeVideo(); closeOrder();
+      }
+    });
+    // Click outside
+    [videoModal, orderModal].forEach(modal => {
+      modal.addEventListener('click', (e)=>{
+        if(e.target === modal){ modal.style.display = 'none'; ytFrame.src=''; }
+      });
+    });
+  </script>
+</body>
+</html>
