@@ -155,7 +155,15 @@
 </div>
 <div class="panel">
 <div class="section-title" style="margin:0 0 6px">Broj srećnih klijenata</div>
-<div id="counter" style="font-size:54px;font-weight:900">1,284</div>
+<div
+  data-base-count="112"
+  data-daily-increment="15"
+  data-start-date="2024-08-01"
+  id="counter"
+  style="font-size:54px;font-weight:900"
+>
+  112
+</div>
 <div class="note">*Brojač raste dok čitaš. Hvala na poverenju!</div>
 </div>
 </div>
@@ -355,9 +363,49 @@
     document.getElementById('year').textContent = new Date().getFullYear();
     (function(){
       const el = document.getElementById('counter');
-      let n = 1284, target = n + Math.floor(Math.random()*40+10);
-      const tick = () => { n += Math.random() * 3; el.textContent = Math.floor(n).toLocaleString('sr-RS'); if(n < target) requestAnimationFrame(tick); };
-      tick();
+      if(!el) return;
+
+      const baseCount = Number(el.dataset.baseCount) || 112;
+      const dailyIncrement = Number(el.dataset.dailyIncrement) || 15;
+      const startDateValue = el.dataset.startDate;
+      const formatter = new Intl.NumberFormat('sr-RS');
+      const MS_PER_DAY = 86400000;
+
+      const parseDateToUTC = (value) => {
+        if(!value) return NaN;
+        const parts = value.split('-').map(Number);
+        if(parts.length < 3 || parts.some(Number.isNaN)) return NaN;
+        const [year, month, day] = parts;
+        return Date.UTC(year, month - 1, day);
+      };
+
+      const today = new Date();
+      const todayUTC = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+      const startUTC = parseDateToUTC(startDateValue);
+      const effectiveStartUTC = Number.isNaN(startUTC) ? todayUTC : startUTC;
+      const daysSinceStart = Math.max(0, Math.floor((todayUTC - effectiveStartUTC) / MS_PER_DAY));
+      const target = baseCount + daysSinceStart * dailyIncrement;
+      const previous = daysSinceStart > 0 ? target - dailyIncrement : baseCount;
+      const startValue = Math.max(baseCount, previous);
+
+      if(startValue >= target){
+        el.textContent = formatter.format(target);
+        return;
+      }
+
+      const duration = 1200;
+      const animationStart = performance.now();
+
+      const step = (timestamp) => {
+        const progress = Math.min(1, (timestamp - animationStart) / duration);
+        const current = Math.floor(startValue + (target - startValue) * progress);
+        el.textContent = formatter.format(current);
+        if(progress < 1){
+          requestAnimationFrame(step);
+        }
+      };
+
+      requestAnimationFrame(step);
     })();
 
     // Video modal
