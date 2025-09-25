@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chat podrška – Rođendanske čestitke</title>
+  <style>
+    :root {
+      --purple: #7c5cff;
+      --cyan: #00e0ff;
+      --bg: #0b0b10;
+      --card: #11131c;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f2f4ff;
+      --muted: #a3a9c2;
+      --shadow: 0 28px 60px rgba(10, 8, 38, 0.18);
+      --radius: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(124, 92, 255, 0.18), transparent 60%),
+        radial-gradient(1000px 600px at 90% -20%, rgba(0, 224, 255, 0.16), transparent 60%),
+        var(--bg);
+      color: var(--text);
+      padding: 32px 16px;
+    }
+
+    .card {
+      width: min(520px, 100%);
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: clamp(24px, 5vw, 36px);
+      gap: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(24px, 4vw, 30px);
+    }
+
+    .unlock-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .unlock-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .unlock-input {
+      flex: 1 1 180px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(0, 0, 0, 0.2);
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .unlock-input:focus {
+      outline: none;
+      border-color: rgba(124, 92, 255, 0.8);
+      box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.25);
+    }
+
+    button,
+    .send-btn {
+      border: none;
+      border-radius: 12px;
+      padding: 12px 16px;
+      background: linear-gradient(135deg, var(--purple), #5f3dff);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover,
+    .send-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(124, 92, 255, 0.35);
+    }
+
+    .status-message {
+      font-size: 14px;
+      color: var(--muted);
+      min-height: 18px;
+    }
+
+    .chat-box {
+      flex: 1;
+      min-height: 320px;
+      max-height: 480px;
+      overflow-y: auto;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .bubble {
+      padding: 12px 14px;
+      border-radius: 16px;
+      max-width: 90%;
+      line-height: 1.5;
+      word-break: break-word;
+      animation: fade-in 0.25s ease;
+    }
+
+    .bubble.user {
+      margin-left: auto;
+      background: linear-gradient(135deg, rgba(124, 92, 255, 0.9), rgba(0, 224, 255, 0.8));
+      color: #0c1022;
+      border-bottom-right-radius: 4px;
+    }
+
+    .bubble.assistant {
+      background: rgba(255, 255, 255, 0.08);
+      border-bottom-left-radius: 4px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .message-input {
+      flex: 1;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(0, 0, 0, 0.2);
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .message-input:focus {
+      outline: none;
+      border-color: rgba(0, 224, 255, 0.9);
+      box-shadow: 0 0 0 3px rgba(0, 224, 255, 0.25);
+    }
+
+    .hint {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Postavite pitanje našem timu</h1>
+    <p class="hint">Da biste razgovarali sa nama, unesite šifru koju ste dobili uz narudžbinu.</p>
+
+    <div class="unlock-panel" id="unlockPanel">
+      <div class="unlock-row">
+        <input class="unlock-input" id="codeInput" placeholder="Unesite šifru" autocomplete="one-time-code" />
+        <button id="unlockBtn" type="button">Otključaj</button>
+      </div>
+      <div class="status-message" id="unlockStatus"></div>
+    </div>
+
+    <div class="chat-box" id="messages"></div>
+
+    <form class="input-row" id="chatForm">
+      <input class="message-input" id="messageInput" placeholder="Napišite poruku i pritisnite Enter" autocomplete="off" />
+      <button class="send-btn" type="submit">Pošalji</button>
+    </form>
+  </div>
+
+  <script>
+    const messagesContainer = document.getElementById('messages');
+    const messageInput = document.getElementById('messageInput');
+    const chatForm = document.getElementById('chatForm');
+    const unlockPanel = document.getElementById('unlockPanel');
+    const unlockBtn = document.getElementById('unlockBtn');
+    const codeInput = document.getElementById('codeInput');
+    const unlockStatus = document.getElementById('unlockStatus');
+
+    const state = {
+      unlocked: false,
+      formCompleted: false,
+      loading: false,
+      messages: []
+    };
+
+    function renderMessages() {
+      messagesContainer.innerHTML = '';
+      state.messages.forEach(entry => {
+        const item = document.createElement('div');
+        item.className = `bubble ${entry.role}`;
+        item.textContent = entry.content;
+        messagesContainer.appendChild(item);
+      });
+      scrollToBottom();
+    }
+
+    function appendMessage(role, content) {
+      const entry = { role, content };
+      state.messages.push(entry);
+      const item = document.createElement('div');
+      item.className = `bubble ${role}`;
+      item.textContent = content;
+      messagesContainer.appendChild(item);
+      scrollToBottom();
+    }
+
+    function scrollToBottom() {
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    async function initChat() {
+      try {
+        const response = await fetch('api/chat.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'init' })
+        });
+        const data = await response.json();
+        if (data.ok) {
+          state.unlocked = Boolean(data.unlocked);
+          state.formCompleted = Boolean(data.formCompleted);
+          state.messages = Array.isArray(data.messages) ? data.messages : [];
+          renderMessages();
+          updateUnlockVisibility();
+        } else if (data.error) {
+          unlockStatus.textContent = data.error;
+        }
+      } catch (error) {
+        unlockStatus.textContent = 'Ne možemo da se povežemo sa serverom.';
+      }
+    }
+
+    function updateUnlockVisibility() {
+      if (state.unlocked) {
+        unlockPanel.style.display = 'none';
+      } else {
+        unlockPanel.style.display = 'flex';
+      }
+    }
+
+    async function verifyCode() {
+      const code = codeInput.value.trim();
+      if (!code) {
+        unlockStatus.textContent = 'Unesite šifru.';
+        return;
+      }
+
+      unlockStatus.textContent = '';
+      try {
+        const response = await fetch('api/verify_code.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code })
+        });
+        const data = await response.json();
+        if (data.ok) {
+          state.unlocked = true;
+          unlockStatus.textContent = 'Šifra je prihvaćena. Chat je otključan.';
+          updateUnlockVisibility();
+          await initChat();
+        } else {
+          unlockStatus.textContent = 'Šifra nije ispravna. Pokušajte ponovo.';
+        }
+      } catch (error) {
+        unlockStatus.textContent = 'Došlo je do greške. Pokušajte kasnije.';
+      }
+    }
+
+    async function sendMessage(text) {
+      try {
+        const response = await fetch('api/chat.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'message', message: text })
+        });
+        const data = await response.json();
+        if (!data.ok) {
+          const errorMsg = data.error || 'Došlo je do greške.';
+          appendMessage('assistant', errorMsg);
+          return;
+        }
+
+        if (Array.isArray(data.messages)) {
+          data.messages.forEach(entry => {
+            if (entry && entry.role && entry.content) {
+              appendMessage(entry.role, entry.content);
+            }
+          });
+        }
+
+        if (data.locked) {
+          state.unlocked = false;
+          updateUnlockVisibility();
+        }
+
+        if (typeof data.formCompleted === 'boolean') {
+          state.formCompleted = data.formCompleted;
+        }
+      } catch (error) {
+        appendMessage('assistant', 'Veza sa serverom je prekinuta.');
+      }
+    }
+
+    chatForm.addEventListener('submit', event => {
+      event.preventDefault();
+      const text = messageInput.value.trim();
+      if (!text) {
+        return;
+      }
+      messageInput.value = '';
+      appendMessage('user', text);
+      sendMessage(text);
+    });
+
+    messageInput.addEventListener('keydown', event => {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        chatForm.dispatchEvent(new Event('submit'));
+      }
+    });
+
+    unlockBtn.addEventListener('click', verifyCode);
+    codeInput.addEventListener('keydown', event => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        verifyCode();
+      }
+    });
+
+    initChat();
+  </script>
+</body>
+</html>
