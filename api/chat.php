@@ -1,16 +1,20 @@
 <?php
-session_start();
-header('Content-Type: application/json; charset=utf-8');
 
-require_once __DIR__ . '/../lib/env.php';
-try {
-    require_once __DIR__ . '/../lib/excel.php';
-} catch (Throwable $e) {
-    echo json_encode(['ok' => false, 'error' => 'Biblioteka PHPSpreadsheet nije instalirana.']);
+$autoload = __DIR__ . '/../vendor/autoload.php';
+if (!file_exists($autoload)) {
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['ok' => false, 'error' => 'Biblioteka PHPSpreadsheet nije instalirana.'], JSON_UNESCAPED_UNICODE);
     exit;
 }
+require_once $autoload;
+
+require_once __DIR__ . '/../lib/env.php';
+require_once __DIR__ . '/../lib/excel.php';
 
 load_env(__DIR__ . '/../.env');
+
+session_start();
+header('Content-Type: application/json; charset=utf-8');
 
 $inputRaw = file_get_contents('php://input');
 $input = $inputRaw ? json_decode($inputRaw, true) : [];
@@ -179,7 +183,7 @@ if (!($formState['completed'] ?? false)) {
     exit;
 }
 
-$apiKey = $_ENV['OPENAI_API_KEY'] ?? getenv('OPENAI_API_KEY');
+$apiKey = $_ENV['OPENAI_API_KEY'] ?? null;
 if (!$apiKey) {
     echo json_encode(['ok' => false, 'error' => 'OPENAI_API_KEY nije podešen na serveru.']);
     exit;

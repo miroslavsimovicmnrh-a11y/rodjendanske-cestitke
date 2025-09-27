@@ -1,13 +1,20 @@
 <?php
-session_start();
-header('Content-Type: application/json; charset=utf-8');
 
-try {
-    require_once __DIR__ . '/../lib/excel.php';
-} catch (Throwable $e) {
-    echo json_encode(['ok' => false, 'error' => 'Biblioteka PHPSpreadsheet nije instalirana.']);
+$autoload = __DIR__ . '/../vendor/autoload.php';
+if (!file_exists($autoload)) {
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['ok' => false, 'error' => 'Biblioteka PHPSpreadsheet nije instalirana.'], JSON_UNESCAPED_UNICODE);
     exit;
 }
+require_once $autoload;
+
+require_once __DIR__ . '/../lib/env.php';
+require_once __DIR__ . '/../lib/excel.php';
+
+load_env(__DIR__ . '/../.env');
+
+session_start();
+header('Content-Type: application/json; charset=utf-8');
 
 $input = json_decode(file_get_contents('php://input'), true);
 $answers = isset($input['answers']) && is_array($input['answers']) ? $input['answers'] : [];
@@ -23,11 +30,11 @@ if ($code === '') {
 }
 
 $dataDir = __DIR__ . '/../data';
-$formPath = $dataDir . '/porudzbine.xlsx';
+$path = $dataDir . '/porudzbine.xlsx';
 
 try {
-    createIfMissing($formPath, ['Timestamp', 'Sifra', 'Ime', 'OstalaPoljaJSON'], 'Porudzbine');
-    excel_save_form_response($formPath, 'Porudzbine', $code, $answers);
+    createIfMissing($path, ['Timestamp', 'Sifra', 'Ime', 'OstalaPoljaJSON'], 'Porudzbine');
+    excel_save_form_response($path, 'Porudzbine', $code, $answers);
 } catch (Throwable $e) {
     echo json_encode(['ok' => false, 'error' => 'Greška prilikom čuvanja.']);
     exit;
