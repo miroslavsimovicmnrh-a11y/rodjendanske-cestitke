@@ -1,12 +1,26 @@
 <?php
+
+$autoload = __DIR__ . '/../vendor/autoload.php';
+if (!file_exists($autoload)) {
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['ok' => false, 'error' => 'Biblioteka PHPSpreadsheet nije instalirana.'], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+require_once $autoload;
+
+require_once __DIR__ . '/../lib/env.php';
+
+load_env(__DIR__ . '/../.env');
+
 session_start();
 header('Content-Type: application/json; charset=utf-8');
 
 $input = json_decode(file_get_contents('php://input'), true);
 $code = isset($input['code']) ? trim((string)$input['code']) : '';
 
-$dataDir = realpath(__DIR__ . '/../data');
-if ($dataDir === false) {
+$dataDir = __DIR__ . '/../data';
+
+if (!is_dir($dataDir)) {
     echo json_encode(['ok' => false, 'error' => 'Data directory missing.']);
     exit;
 }

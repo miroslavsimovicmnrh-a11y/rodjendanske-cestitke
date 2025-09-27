@@ -1,13 +1,20 @@
 <?php
-session_start();
-header('Content-Type: application/json; charset=utf-8');
 
-try {
-    require_once __DIR__ . '/../lib/excel.php';
-} catch (Throwable $e) {
-    echo json_encode(['ok' => false, 'error' => 'Biblioteka PHPSpreadsheet nije instalirana.']);
+$autoload = __DIR__ . '/../vendor/autoload.php';
+if (!file_exists($autoload)) {
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['ok' => false, 'error' => 'Biblioteka PHPSpreadsheet nije instalirana.'], JSON_UNESCAPED_UNICODE);
     exit;
 }
+require_once $autoload;
+
+require_once __DIR__ . '/../lib/env.php';
+require_once __DIR__ . '/../lib/excel.php';
+
+load_env(__DIR__ . '/../.env');
+
+session_start();
+header('Content-Type: application/json; charset=utf-8');
 
 $input = json_decode(file_get_contents('php://input'), true);
 $code = isset($input['code']) ? trim((string)$input['code']) : '';
@@ -24,11 +31,11 @@ if ($message === '') {
 }
 
 $dataDir = __DIR__ . '/../data';
-$logPath = $dataDir . '/pitanja.xlsx';
+$path = $dataDir . '/pitanja.xlsx';
 
 try {
-    createIfMissing($logPath, ['Timestamp', 'SifraIliNepoznat', 'Poruka'], 'Pitanja');
-    excel_log_question($logPath, 'Pitanja', $code, $message);
+    createIfMissing($path, ['Timestamp', 'SifraIliNepoznat', 'Poruka'], 'Pitanja');
+    excel_log_question($path, 'Pitanja', $code, $message);
 } catch (Throwable $e) {
     echo json_encode(['ok' => false, 'error' => 'Greška prilikom upisa.']);
     exit;
